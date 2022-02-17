@@ -6,9 +6,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider } from '@emotion/react';
 import theme from '../theme';
 import createEmotionCache from '../createEmotionCache';
-// import ResponsiveAppBar from "src/components/layout/ResponsiveAppBar";
-// import Footer from "src/components/layout/Footer";
-// import "../public/static/css/style.css";
+import ResponsiveAppBar from "src/components/layout/ResponsiveAppBar";
+import Footer from "src/components/layout/Footer";
+import "../public/static/css/style.css";
 import favicon from "../public/static/favicon.ico";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -16,7 +16,15 @@ const clientSideEmotionCache = createEmotionCache();
 import Web3Context, { Web3Provider } from 'src/context/Web3Context';
 import { pageview } from 'src/lib/gtag';
 export default function MyApp(props) {
+    const [isFirstLoading, setIsFirstLoading] = useState(true);
+    const [windowObj, setWindowObj] = useState(null);
+    useEffect(() => {
+        if (isFirstLoading) {
+            setIsFirstLoading(false);
+            setWindowObj(window);
+        }
 
+    }, [isFirstLoading, windowObj])
 
     useEffect(() => {
         const handleRouteChange = url => {
@@ -42,22 +50,15 @@ export default function MyApp(props) {
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
                     <main>
-                       {/*<AppProvider>*/}
-                        <Web3Provider>
-                            {/*<ResponsiveAppBar/>*/}
+                        { windowObj && <Web3Provider>
+                            <ResponsiveAppBar/>
                             <Component {...pageProps} />
-                            {/*<Footer />*/}
-                        </Web3Provider>
-                        {/*</AppProvider>*/}
+                            <Footer />
+                            </Web3Provider>
+                        }
                     </main>
                 </ThemeProvider>
 
             </CacheProvider>
     );
 }
-
-MyApp.propTypes = {
-    Component: PropTypes.elementType.isRequired,
-    emotionCache: PropTypes.object,
-    pageProps: PropTypes.object.isRequired,
-};

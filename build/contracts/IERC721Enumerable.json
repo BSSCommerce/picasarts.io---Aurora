@@ -1037,11 +1037,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.1+commit.df193b15.Linux.g++"
+    "version": "0.8.1+commit.df193b15.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-16T08:04:09.311Z",
+  "updatedAt": "2022-02-17T10:49:56.341Z",
   "devdoc": {
     "details": "See https://eips.ethereum.org/EIPS/eip-721",
     "kind": "dev",

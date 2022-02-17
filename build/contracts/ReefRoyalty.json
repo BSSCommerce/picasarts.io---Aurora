@@ -13991,7 +13991,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": -15,
+                            "referencedDeclaration": 4294967281,
                             "src": "694:3:20",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -14063,10 +14063,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        -18,
-                        -18
+                        4294967278,
+                        4294967278
                       ],
-                      "referencedDeclaration": -18,
+                      "referencedDeclaration": 4294967278,
                       "src": "686:7:20",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -14452,7 +14452,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": -15,
+                          "referencedDeclaration": 4294967281,
                           "src": "1106:3:20",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -15266,7 +15266,7 @@
                               "name": "this",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": -28,
+                              "referencedDeclaration": 4294967268,
                               "src": "1727:4:20",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_contract$_ReefRoyalty_$4582",
@@ -15614,7 +15614,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -25,
+                        "referencedDeclaration": 4294967271,
                         "src": "1999:5:20",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_super$_ReefRoyalty_$4582_$",
@@ -15820,7 +15820,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -25,
+                        "referencedDeclaration": 4294967271,
                         "src": "2143:5:20",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_super$_ReefRoyalty_$4582_$",
@@ -15972,7 +15972,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -25,
+                        "referencedDeclaration": 4294967271,
                         "src": "2339:5:20",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_super$_ReefRoyalty_$4582_$",
@@ -16207,7 +16207,7 @@
                                 "name": "type",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": -27,
+                                "referencedDeclaration": 4294967269,
                                 "src": "2535:4:20",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
@@ -16301,7 +16301,7 @@
                                 "name": "type",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": -27,
+                                "referencedDeclaration": 4294967269,
                                 "src": "2591:4:20",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
@@ -16401,7 +16401,7 @@
                               "name": "type",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": -27,
+                              "referencedDeclaration": 4294967269,
                               "src": "2657:4:20",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
@@ -16477,7 +16477,7 @@
                           "name": "super",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": -25,
+                          "referencedDeclaration": 4294967271,
                           "src": "2699:5:20",
                           "typeDescriptions": {
                             "typeIdentifier": "t_type$_t_super$_ReefRoyalty_$4582_$",
@@ -17013,7 +17013,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": -15,
+                            "referencedDeclaration": 4294967281,
                             "src": "694:3:20",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -17085,10 +17085,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        -18,
-                        -18
+                        4294967278,
+                        4294967278
                       ],
-                      "referencedDeclaration": -18,
+                      "referencedDeclaration": 4294967278,
                       "src": "686:7:20",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -17474,7 +17474,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": -15,
+                          "referencedDeclaration": 4294967281,
                           "src": "1106:3:20",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -18288,7 +18288,7 @@
                               "name": "this",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": -28,
+                              "referencedDeclaration": 4294967268,
                               "src": "1727:4:20",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_contract$_ReefRoyalty_$4582",
@@ -18636,7 +18636,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -25,
+                        "referencedDeclaration": 4294967271,
                         "src": "1999:5:20",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_super$_ReefRoyalty_$4582_$",
@@ -18842,7 +18842,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -25,
+                        "referencedDeclaration": 4294967271,
                         "src": "2143:5:20",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_super$_ReefRoyalty_$4582_$",
@@ -18994,7 +18994,7 @@
                         "name": "super",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -25,
+                        "referencedDeclaration": 4294967271,
                         "src": "2339:5:20",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_super$_ReefRoyalty_$4582_$",
@@ -19229,7 +19229,7 @@
                                 "name": "type",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": -27,
+                                "referencedDeclaration": 4294967269,
                                 "src": "2535:4:20",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
@@ -19323,7 +19323,7 @@
                                 "name": "type",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": -27,
+                                "referencedDeclaration": 4294967269,
                                 "src": "2591:4:20",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
@@ -19423,7 +19423,7 @@
                               "name": "type",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": -27,
+                              "referencedDeclaration": 4294967269,
                               "src": "2657:4:20",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
@@ -19499,7 +19499,7 @@
                           "name": "super",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": -25,
+                          "referencedDeclaration": 4294967271,
                           "src": "2699:5:20",
                           "typeDescriptions": {
                             "typeIdentifier": "t_type$_t_super$_ReefRoyalty_$4582_$",
@@ -19657,11 +19657,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.1+commit.df193b15.Linux.g++"
+    "version": "0.8.1+commit.df193b15.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-16T08:04:09.329Z",
+  "updatedAt": "2022-02-17T10:49:56.365Z",
   "devdoc": {
     "kind": "dev",
     "methods": {

@@ -166,7 +166,7 @@
                               "name": "type",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": -27,
+                              "referencedDeclaration": 4294967269,
                               "src": "994:4:14",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
@@ -1960,7 +1960,7 @@
                         "name": "abi",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -1,
+                        "referencedDeclaration": 4294967295,
                         "src": "4346:3:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_abi",
@@ -2342,7 +2342,7 @@
                           "name": "abi",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": -1,
+                          "referencedDeclaration": 4294967295,
                           "src": "4584:3:14",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_abi",
@@ -2663,7 +2663,7 @@
                               "name": "type",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": -27,
+                              "referencedDeclaration": 4294967269,
                               "src": "994:4:14",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_metatype_pure$__$returns$__$",
@@ -4457,7 +4457,7 @@
                         "name": "abi",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -1,
+                        "referencedDeclaration": 4294967295,
                         "src": "4346:3:14",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_abi",
@@ -4839,7 +4839,7 @@
                           "name": "abi",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": -1,
+                          "referencedDeclaration": 4294967295,
                           "src": "4584:3:14",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_abi",
@@ -5007,11 +5007,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.1+commit.df193b15.Linux.g++"
+    "version": "0.8.1+commit.df193b15.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-16T08:04:09.315Z",
+  "updatedAt": "2022-02-17T10:49:56.346Z",
   "devdoc": {
     "details": "Library used to query support of an interface declared via {IERC165}. Note that these functions return the actual result of the query: they do not `revert` if an interface is not supported. It is up to the caller to decide what to do in these cases.",
     "kind": "dev",

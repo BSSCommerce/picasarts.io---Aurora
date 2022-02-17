@@ -1,69 +1,45 @@
 import React, { useState, createContext } from "react";
-import { web3Accounts, web3Enable } from "@polkadot/extension-dapp"
-import { Provider, Signer } from '@reef-defi/evm-provider';
-import { WsProvider } from '@polkadot/rpc-provider';
 import FactoryAbi from 'src/abi/CollectionFactoryABI.json';
 import NftABI from 'src/abi/NftABI.json';
 import MarketPlaceABI from 'src/abi/MarketPlaceABI.json';
-import { ethers, Contract, utils } from 'ethers';
+import { ethers, Contract, utils, getDefaultProvider, Wallet } from 'ethers';
 import { factoryContractAddress, nftMarketplaceAddress } from "../config/contractAddress";
-import { useAlert } from 'tr-alerts';
-
+//import { useAlert } from 'tr-alerts';
+import Web3 from "web3";
 const Web3Context = createContext();
 
 export const Web3Provider = (props) => {
-    const URL = 'wss://testnet.aurora.dev';
-    const showAlert = useAlert();
-
+    //const showAlert = useAlert();
     const [account, setAccounts] = useState();
     const [evmProvider, setEvmProvider] = useState();
     const [isApiConnected, setIsApiConnected] = useState();
-    const [signer, setSigner] = useState();
+    let signer = null;
+    const [wallet, setWallet] = useState();
     const functionsToExport = {};
     functionsToExport.extensionSetup = async () => {
 
-        let allInjected = await web3Enable('Aurora NFT Marketplace');
-
-        if (allInjected.length === 0) {
-            showAlert('Alert!', 'No Wallet Extension Installed!', 'danger', 2000)
-            console.log('No extension installed!');
-            return false;
+        if (window.ethereum) {
+            window.web3 = new Web3(window.ethereum);
+        } else if (window.web3) {
+            window.web3 = new Web3(window.web3.currentProvider);
+        } else {
+            window.alert(
+                "Non-Ethereum browser detected. You should consider trying MetaMask!"
+            );
+            return  false;
         }
-        let injected;
-        if (allInjected[0] && allInjected[0].signer) {
-            injected = allInjected[0].signer;
+        const web3 = window.web3;
+        const allAccounts = await web3.eth.getAccounts();
+
+        if (allAccounts && allAccounts.length) {
+            //showAlert('Success!', 'Wallet Connected!', 'success', 2000)
+            setAccounts(allAccounts[0]);
         }
-
-        const newEvmProvider = new Provider({
-            provider: new WsProvider(URL)
-        });
-        setEvmProvider(newEvmProvider);
-        newEvmProvider.api.on('connected', () => setIsApiConnected(true));
-        newEvmProvider.api.on('disconnected', () => setIsApiConnected(false));
-        newEvmProvider.api.on('ready', async () => {
-            const allAccounts = await web3Accounts();
-
-            if (allAccounts[0] && allAccounts[0].address) {
-                showAlert('Success!', 'Wallet Connected!', 'success', 2000)
-
-                console.log(allAccounts);
-                setAccounts(allAccounts[0].address);
-            }
-
-            const wallet = new Signer(newEvmProvider, allAccounts[0].address, injected);
-            // Claim default account
-            if (!(await wallet.isClaimed())) {
-                console.log(
-                    "No claimed EVM account found -> claimed default EVM account: ",
-                    await wallet.getAddress()
-                );
-                await wallet.claimDefaultAccount();
-            }
-
-            setSigner(wallet);
-        })
-
-
+        let provider = ethers.getDefaultProvider("https://testnet.aurora.dev");
+        let privateKey = "818a85a421a6f0682a23465cd70e55b6e3864eb7619a23ae405e4d1784a3032d"
+        let metaWallet = new ethers.Wallet(privateKey, provider);
+        setWallet(metaWallet);
+        signer = metaWallet;
     };
     const checkSigner = async () => {
         if (!signer) {
@@ -71,31 +47,38 @@ export const Web3Provider = (props) => {
         }
         return true;
     }
+    functionsToExport.getWallet = async () => {
+        if (!signer) {
+            await functionsToExport.extensionSetup();
+        }
+        return signer;
+    }
+
     const showTransactionProgress = async (result) => {
-        showAlert('Alert!', 'Transaction Initiated!', 'primary', 2000)
+        console.log('Alert!', 'Transaction Initiated!', 'primary', 2000)
         let completeResult, receipt;
         try {
             completeResult = await Promise.resolve(result);
         }
         catch (e) {
-            showAlert("Alert", `Transaction Failed! ${e.toString()}`, "danger", 2000);
+            console.log("Alert", `Transaction Failed! ${e.toString()}`, "danger", 2000);
             return false;
         }
-        showAlert("Alert", `Transaction Sent! your hash is: ${completeResult.hash}`, "success", 6000);
+        console.log("Alert", `Transaction Sent! your hash is: ${completeResult.hash}`, "success", 6000);
         try {
             receipt = await completeResult.wait();
         }
         catch (e) {
-            showAlert("Alert", `Transaction Failed! ${e.toString()}`, "danger", 2000);
+            console.log("Alert", `Transaction Failed! ${e.toString()}`, "danger", 2000);
             return false;
         }
 
         if (receipt.status === 1) {
-            showAlert("Alert", `Transaction Success!`, "success", 2000);
+            console.log("Alert", `Transaction Success!`, "success", 2000);
 
         }
         else {
-            showAlert("Alert", `Transaction Failed!`, "danger", 2000);
+            console.log("Alert", `Transaction Failed!`, "danger", 2000);
         }
         return receipt;
 
@@ -126,9 +109,10 @@ export const Web3Provider = (props) => {
 
     functionsToExport.getUserCollections = async () => {
         await checkSigner();
+        console.log("Signer:", signer)
         const factoryContract = new Contract(factoryContractAddress, FactoryAbi, signer);
         const result = await factoryContract.getUserCollections();
-        console.log(result);
+        console.log("GET USER COLLECTIONS:", result);
         return (result);
     }
 

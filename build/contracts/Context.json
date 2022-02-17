@@ -65,7 +65,7 @@
                       "name": "msg",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": -15,
+                      "referencedDeclaration": 4294967281,
                       "src": "719:3:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_magic_message",
@@ -157,7 +157,7 @@
                       "name": "msg",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": -15,
+                      "referencedDeclaration": 4294967281,
                       "src": "826:3:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_magic_message",
@@ -296,7 +296,7 @@
                       "name": "msg",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": -15,
+                      "referencedDeclaration": 4294967281,
                       "src": "719:3:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_magic_message",
@@ -388,7 +388,7 @@
                       "name": "msg",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": -15,
+                      "referencedDeclaration": 4294967281,
                       "src": "826:3:10",
                       "typeDescriptions": {
                         "typeIdentifier": "t_magic_message",
@@ -475,11 +475,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.1+commit.df193b15.Linux.g++"
+    "version": "0.8.1+commit.df193b15.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-16T08:04:09.313Z",
+  "updatedAt": "2022-02-17T10:49:56.343Z",
   "devdoc": {
     "details": "Provides information about the current execution context, including the sender of the transaction and its data. While these are generally available via msg.sender and msg.data, they should not be accessed in such a direct manner, since when dealing with meta-transactions the account sending and paying for execution may not be the actual sender (as far as an application is concerned). This contract is only required for intermediate, library-like contracts.",
     "kind": "dev",
