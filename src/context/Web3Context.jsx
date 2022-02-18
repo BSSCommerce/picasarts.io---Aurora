@@ -30,10 +30,14 @@ export const Web3Provider = (props) => {
         }
         const web3 = window.web3;
         const allAccounts = await web3.eth.getAccounts();
+        console.log("All account", allAccounts);
 
         if (allAccounts && allAccounts.length) {
             //showAlert('Success!', 'Wallet Connected!', 'success', 2000)
+            console.log('Success!', 'Wallet Connected!', 'success')
             setAccounts(allAccounts[0]);
+        } else {
+            window.ethereum.request({ method: 'eth_requestAccounts' });
         }
         let provider = ethers.getDefaultProvider("https://testnet.aurora.dev");
         let privateKey = "818a85a421a6f0682a23465cd70e55b6e3864eb7619a23ae405e4d1784a3032d"
@@ -177,6 +181,7 @@ export const Web3Provider = (props) => {
     }
 
     functionsToExport.tokenByIndex = async (contractAddress, index) => {
+        await checkSigner();
         const nftContract = new Contract(contractAddress, NftABI, signer);
         const result = await nftContract.tokenByIndex(index);
         console.log(result);
@@ -186,7 +191,7 @@ export const Web3Provider = (props) => {
         await checkSigner();
         const nftContract = new Contract(contractAddress, NftABI, signer);
         const result = await nftContract.tokenOfOwnerByIndex(ownerAddress, index);
-        console.log(result);
+        console.log("RESULT:", result);
         return result;
     }
 
@@ -211,6 +216,7 @@ export const Web3Provider = (props) => {
 
     //returns all unsold items as array of structs
     functionsToExport.fetchMarketItems = async () => {
+        await checkSigner();
         const marketPlaceContract = new Contract(nftMarketplaceAddress, MarketPlaceABI, signer);
         const result = await marketPlaceContract.fetchMarketItems();
         console.log(result);
@@ -218,12 +224,14 @@ export const Web3Provider = (props) => {
     }
 
     functionsToExport.fetchItemsCreated = async () => {
+        await checkSigner();
         const marketPlaceContract = new Contract(nftMarketplaceAddress, MarketPlaceABI, signer);
         const result = await marketPlaceContract.fetchItemsCreated();
         return result;
     }
 
     functionsToExport.fetchMyNFTs = async () => {
+        await checkSigner();
         const marketPlaceContract = new Contract(nftMarketplaceAddress, MarketPlaceABI, signer);
         const result = await marketPlaceContract.fetchMyNFTs();
         return result;

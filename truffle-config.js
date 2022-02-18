@@ -1,4 +1,4 @@
-const HDWalletProvider = require('truffle-hdwallet-provider')
+const HDWalletProvider = require('@truffle/hdwallet-provider')
 const NonceTrackerSubprovider = require('web3-provider-engine/subproviders/nonce-tracker')
 const utils = require('web3-utils')
 const MNEMONIC = process.env.MNEMONIC || "guard curve enroll list snack eternal that spirit enlist antenna spoil actress"
@@ -10,17 +10,19 @@ const setupWallet = (
     url
 ) => {
   if (!hdWalletProvider) {
-    hdWalletProvider = new HDWalletProvider(
-        MNEMONIC,
-        url,
-        startIndex,
-        numberOfAccounts,
-        true,
+    hdWalletProvider = new HDWalletProvider({
+          mnemonic: MNEMONIC,
+          providerOrUrl: url,
+          addressIndex: startIndex,
+          numberOfAddresses: numberOfAccounts,
+          shareNonce: true,
+        }
     )
-    hdWalletProvider.engine.addProvider(new NonceTrackerSubprovider())
+    //hdWalletProvider.engine.addProvider(new NonceTrackerSubprovider())
   }
   return hdWalletProvider
 }
+
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
@@ -36,7 +38,6 @@ module.exports = {
       network_id: 0x4e454153,
       gas: 10000000,
       from: '0xBE47fC181f5704704c92dC8518950ff12d243584',
-      chain_id: "*"
     },
     ropsten: {
       provider: () => setupWallet(`https://ropsten.infura.io/v3/${process.env.INFURA_TOKEN}`),
@@ -55,7 +56,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.1",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.0",    // Fetch exact version from solc-bin (default: truffle's version)
       docker: false,        // Use "0.5.1" you've installed locally with docker (default: false)
       settings: {          // See the solidity docs for advice about optimization and evmVersion
         optimizer: {

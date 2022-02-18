@@ -8,7 +8,7 @@ import Web3Context, { Web3Provider } from "src/context/Web3Context";
 import ImageUpload from "src/components/common/ImageUpload";
 import { uploadToCrust } from "near-crust-ipfs";
 const REQUIRED_ATTR_LIST = ["title", "description", "royalty"];
-import { nftMarketplaceAddress } from "src/config/contractAddress";
+import { nftAddress } from "src/config/contractAddress";
 const CreateNFT = () => {
     const [coverPhoto, setCoverPhoto] = useState('');
     const [nftFile, setNftFile] = useState('');
@@ -60,8 +60,10 @@ const CreateNFT = () => {
     const createNFTFromData = useCallback(async () => {
         try {
             const {cid, path} = await uploadToCrust( nftFile );
-            console.log(cid, path);
-            const txn = await mint(cid, metaData.royalty, nftMarketplaceAddress);
+            console.log("CID PATH", cid, path);
+            let meta = Buffer.from(`{tile: "${metaData.title}", description: "${metaData.description}", cid: "${cid}"}`, "utf-8").toString('hex')
+            console.log("META DATA:", meta);
+            const txn = await mint(meta, metaData.royalty, nftAddress);
             if (txn) {
                 console.log(txn);
             }

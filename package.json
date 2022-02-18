@@ -21,7 +21,8 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "^5.3.1",
     "@mui/material": "latest",
-    "@openzeppelin/contracts": "latest",
+    "@openzeppelin/contracts": "^4.1.0",
+    "@truffle/hdwallet-provider": "^2.0.3",
     "bn": "^1.0.5",
     "copy-to-clipboard": "^3.3.1",
     "ethers": "^5.5.4",
@@ -38,9 +39,9 @@
     "react-dropzone": "^11.5.1",
     "swr": "^1.1.2",
     "tr-alerts": "latest",
-    "truffle-hdwallet-provider": "latest",
-    "web3": "^1.7.0",
-    "web3-provider-engine": "latest"
+    "web3": "^1.2.9",
+    "web3-provider-engine": "~15.0.12",
+    "web3-utils": "^1.7.0"
   },
   "devDependencies": {
     "eslint": "latest",

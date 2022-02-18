@@ -7,6 +7,7 @@ import Web3Context, { Web3Provider } from "src/context/Web3Context";
 import CollectionCard from "./CollectionCard";
 import ImageUpload from "src/components/common/ImageUpload";
 import { uploadToCrust } from "near-crust-ipfs";
+import {nftAddress} from "../../config/contractAddress";
 const CreateCollection = () => {
     const [cost, setCost] = useState()
 
@@ -62,6 +63,18 @@ const CreateCollection = () => {
         //     const result = await uploadFile(reader.result);
         //     console.log(result);
         // }
+
+
+        try {
+            const {cid, path} = await uploadToCrust( collectionBanner );
+            let meta = Buffer.from(`{tile: "${metaData.title}", subtitle: "${metaData.subtitle}", description: "${metaData.description}", cid: "${cid}"}`, "utf-8").toString('hex')
+            const txn = await createCollection(metaData.name, metaData.symbol, meta, cost.toString());
+            if (txn) {
+                console.log(txn);
+            }
+        } catch (e) {
+            console.log(e);
+        }
 
     }
     return (
