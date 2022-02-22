@@ -11,18 +11,21 @@ import {
 } from "@mui/material"
 import NextLink from "next/link";
 import {useRouter} from "next/router";
+import {utils} from "ethers";
 
 export default function GetToken({id}) {
     const Router = useRouter();
-    const {tokenURI, getWallet, getOwner, getTokenRoyalty, createMarketItem, setApprovalForAll} = useContext(Web3Context);
+    const {tokenURI, getWallet, getOwner, getTokenRoyalty, createMarketItem, setApprovalForAll, buyNFT} = useContext(Web3Context);
     const [ownerId, setOwnerId] = useState();
     const [isOwner, setIsOwner] = useState(false);
     const [nftData, setNftData] = useState();
     const [royalty, setRoyalty] = useState();
     const [price, setPrice] = useState();
+    const [currentWallet, setCurrentWallet] = useState()
     useEffect(() => {
         const fetchData = async ()=> {
             let wallet = await getWallet();
+            setCurrentWallet(wallet);
             let owner = await getOwner(id);
             if (wallet && wallet.address === owner.toString()) {
                 setIsOwner(true);
@@ -55,6 +58,10 @@ export default function GetToken({id}) {
         let createItemResult = await createMarketItem(nftAddress, id, price);
         await Router.push("/")
     }, [price])
+
+    const handleBuyNow = useCallback(async (price) => {
+        await buyNFT(nftAddress, id, price)
+    }, [])
     return (
         <Box
             sx={{
@@ -155,6 +162,16 @@ export default function GetToken({id}) {
                                 {/*        <Button variant={"contained"} onClick={() => handleBuyNow(account, token.token_id, offerToken)}>Buy Now</Button>*/}
                                 {/*    </div>*/}
                                 {/*}*/}
+
+                                {
+                                    currentWallet ? <div className={"section token-info"}>
+                                        {
+                                            !isOwner && <Button variant={"contained"} onClick={() => handleBuyNow(0.2)}>Buy Now</Button>
+                                        }
+                                    </div> : <div className={"section token-info"}>
+                                               <Button variant={"contained"} onClick={() => window.ethereum.request({ method: 'eth_requestAccounts' })}>Connect Wallet to Buy</Button>
+                                            </div>
+                                }
 
                             </div>
                         </Grid>

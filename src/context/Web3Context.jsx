@@ -240,7 +240,7 @@ export const Web3Provider = (props) => {
     }
 
     functionsToExport.buyNFT = async (NFTContractAddress, itemId, nftPrice) => {
-
+        await checkSigner();
         const marketPlaceContract = new Contract(nftMarketplaceAddress, MarketPlaceABI, signer);
         return (await showTransactionProgress(marketPlaceContract.createMarketSale(NFTContractAddress, itemId, { value: nftPrice })));
     }

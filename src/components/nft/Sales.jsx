@@ -1,4 +1,4 @@
-import {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import Web3Context from "src/context/Web3Context";
 import { nftAddress } from "src/config/contractAddress"
 import {
@@ -6,9 +6,11 @@ import {
     Skeleton,
     Card,
     CardHeader,
-    CardContent
+    CardContent, Typography
 } from "@mui/material";
 import NextLink from "next/link";
+import { utils } from 'ethers';
+
 const MyNFTs = () => {
     const {fetchMarketItems, tokenURI} = useContext(Web3Context);
     const [saleNFTs, setSaleNFTs] = useState([]);
@@ -33,7 +35,8 @@ const MyNFTs = () => {
                             nftDataEncode = JSON.parse(nftDataEncode);
                             saleNFTsList.push({
                                 nftDataEncode: nftDataEncode,
-                                tokenId: tokenId
+                                tokenId: tokenId,
+                                price: item.price.toString()
                             })
                         } catch (e) {
                             console.log("Token Id", tokenId, " has incorrect ")
@@ -44,7 +47,6 @@ const MyNFTs = () => {
 
             }
             setSaleNFTs(saleNFTsList);
-            console.log("saleNFTsList", saleNFTsList)
             setIsLoadingPage(false);
         }
 
@@ -72,7 +74,8 @@ const MyNFTs = () => {
             {
                 saleNFTs.map(({
                                 nftDataEncode: {title, description, cid},
-                                tokenId
+                                tokenId,
+                                price
                             }) =>
                     <Grid item key={tokenId} xs={6} sm={4} md={3}>
                         <Card className={"nft-card"} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -90,6 +93,16 @@ const MyNFTs = () => {
                                 // subheader={<>by {ownerAddress.slice(0,3)}...</>}
                             />
                             <CardContent key={`${tokenId}_card_main_content`}>
+                                <Typography gutterBottom component="div">
+                                    Price
+                                </Typography>
+
+                                <div className="nft-price" key={`${tokenId}_price`}>
+                                    <Typography variant="body2" color="text.secondary">
+                                        <span>{utils.formatEther(price)} ETH</span>
+                                    </Typography>
+                                </div>
+
                                 <div className={"nft-card-actions"}>
                                     <NextLink href={"/token/[id]"} as={`/token/${tokenId}/`} >See Details</NextLink>
                                     <span> | </span>

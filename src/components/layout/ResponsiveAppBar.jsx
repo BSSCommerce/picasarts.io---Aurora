@@ -73,7 +73,7 @@ const ResponsiveAppBar = () => {
     const [wallet, setWallet] = useState();
     const [account, setAccount] = useState({});
     useEffect(() => {
-        getWallet().then(data => setWallet({address: data.address }))
+        getWallet().then(data => setWallet(data))
     }, [])
 
     if (profile && !wallet) {
