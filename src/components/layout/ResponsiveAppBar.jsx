@@ -204,8 +204,7 @@ const ResponsiveAppBar = () => {
                                 <ListItemIcon>
                                     <DashboardIcon fontSize="small"/>
                                 </ListItemIcon>
-                                <NextLink key={`${wallet.address}_collection_link`} href={"/collection/[owner_id]"}
-                                          as={`/collection/${wallet.address}`}
+                                <NextLink key={`${wallet.address}_my_nfts`} href={"/my-nfts"}
                                           className={"nft-author-name"}><Typography textAlign={"Left"}>My NFTs</Typography></NextLink>
                             </MenuItem>
                             <MenuItem key={"menu-my-collections"}>

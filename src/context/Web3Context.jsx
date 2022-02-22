@@ -3,7 +3,7 @@ import FactoryAbi from 'src/abi/CollectionFactoryABI.json';
 import NftABI from 'src/abi/NftABI.json';
 import MarketPlaceABI from 'src/abi/MarketPlaceABI.json';
 import { ethers, Contract, utils, getDefaultProvider, Wallet } from 'ethers';
-import { factoryContractAddress, nftMarketplaceAddress } from "../config/contractAddress";
+import { factoryContractAddress, nftMarketplaceAddress, nftAddress } from "src/config/contractAddress";
 //import { useAlert } from 'tr-alerts';
 import Web3 from "web3";
 const Web3Context = createContext();
@@ -153,7 +153,7 @@ export const Web3Provider = (props) => {
     functionsToExport.tokenURI = async (tokenID, contractAddress) => {
         const nftContract = new Contract(contractAddress, NftABI, signer);
         const result = await nftContract.tokenURI(tokenID);
-        console.log(result);
+        console.log("TOKEN-URI", result);
         return result;
     }
 
@@ -196,6 +196,7 @@ export const Web3Provider = (props) => {
     }
 
     functionsToExport.setApprovalForAll = async (bool, contractAddress) => {
+        await checkSigner();
         const nftContract = new Contract(contractAddress, NftABI, signer);
         return (await showTransactionProgress(nftContract.setApprovalForAll(nftMarketplaceAddress, bool)));
     }
@@ -280,9 +281,14 @@ export const Web3Provider = (props) => {
         //     console.log(c);
         // })
 
-
     }
-
+    functionsToExport.getOwner = async (tokenId) => {
+        await checkSigner();
+        const nftContract = new Contract(nftAddress, NftABI, signer);
+        const result = await nftContract.ownerOf(tokenId);
+        console.log("Owner of tokenId:", tokenId, result);
+        return result;
+    }
     return (<Web3Context.Provider value={{ account, ...functionsToExport }}>
         {props.children}
     </Web3Context.Provider>)

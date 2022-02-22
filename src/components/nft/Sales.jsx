@@ -10,49 +10,50 @@ import {
 } from "@mui/material";
 import NextLink from "next/link";
 const MyNFTs = () => {
-    const {tokenOfOwnerByIndex, tokenURI, isApprovedForAll, getWallet, balanceOf} = useContext(Web3Context);
-    const [myNFTs, setMyNFTs] = useState([]);
+    const {fetchMarketItems, tokenURI} = useContext(Web3Context);
+    const [saleNFTs, setSaleNFTs] = useState([]);
     const [isLoadingPage, setIsLoadingPage] = useState(true);
     const [isApproved, setIsApproved] = useState(false);
+    const [isFirstLoading, setIsFirstLoading] = useState(true);
     useEffect(() => {
         const fetchNFTData = async () => {
             setIsLoadingPage(true);
-            let wallet = await getWallet();
-            const totalNFTs = parseInt((await balanceOf(wallet.address, nftAddress)).toString());
+            let marketItems = await fetchMarketItems();
+            let saleNFTsList = [];
+            for (let i=0; i < marketItems.length; i++) {
+                let collections = marketItems[i];
+                for (let j=0; j < collections.length; j++) {
+                    let item = collections[j];
+                    let tokenId = item.tokenId;
+                    if (tokenId) {
+                        try {
+                            let encodeMetadata =  await tokenURI(tokenId, nftAddress);
+                            const buf = new Buffer(encodeMetadata, 'hex');
+                            let nftDataEncode = buf.toString('utf8');
+                            nftDataEncode = JSON.parse(nftDataEncode);
+                            saleNFTsList.push({
+                                nftDataEncode: nftDataEncode,
+                                tokenId: tokenId
+                            })
+                        } catch (e) {
+                            console.log("Token Id", tokenId, " has incorrect ")
+                        }
 
-            setIsApproved(await isApprovedForAll(wallet.address, nftAddress));
-
-            let nftItems = [];
-            for (let i = 6; i < totalNFTs; i++) {
-                let token = await tokenOfOwnerByIndex(wallet.address, i, nftAddress);
-                console.log(token);
-                const nftData = {
-                    ownerAddress: wallet.address,
-                    contractAddress: nftAddress,
-                    tokenId: parseInt(token.toString()),
-                }
-
-                nftData["tokenURI"] = await tokenURI(nftData.tokenId, nftAddress);
-                const buf = new Buffer(nftData["tokenURI"], 'hex');
-                let nftDataEncode = buf.toString('utf8');
-                if (nftDataEncode && nftDataEncode.indexOf("cid")) {
-                    try {
-                        nftData["nftDataEncode"] = JSON.parse(nftDataEncode);
-                        console.log(nftData.nftDataEncode)
-                        nftItems.push(nftData);
-                    } catch (e) {
-                        console.log("Token Id", nftData.tokenId, " has incorrect ")
                     }
-
                 }
 
             }
-            setMyNFTs(nftItems);
+            setSaleNFTs(saleNFTsList);
+            console.log("saleNFTsList", saleNFTsList)
             setIsLoadingPage(false);
         }
 
-        fetchNFTData();
-    }, []);
+        if (isFirstLoading) {
+            setIsFirstLoading(false)
+            fetchNFTData();
+        }
+
+    }, [isFirstLoading]);
     return (
         <Grid container spacing={2} >
             {
@@ -66,13 +67,11 @@ const MyNFTs = () => {
 
             }
             {
-                (!myNFTs.length && !isLoadingPage) && <>No NFT found</>
+                (!saleNFTs.length && !isLoadingPage) && <>No NFT found</>
             }
             {
-                myNFTs.map(({
+                saleNFTs.map(({
                                 nftDataEncode: {title, description, cid},
-                                ownerAddress,
-                                contractAddress,
                                 tokenId
                             }) =>
                     <Grid item key={tokenId} xs={6} sm={4} md={3}>
@@ -88,7 +87,7 @@ const MyNFTs = () => {
                                 sx={{ paddingBottom: "0"}}
                                 key={`${tokenId}_card_header`}
                                 title={<span className={"nft-title"}>{title}</span>}
-                                subheader={<>by {ownerAddress.slice(0,3)}...</>}
+                                // subheader={<>by {ownerAddress.slice(0,3)}...</>}
                             />
                             <CardContent key={`${tokenId}_card_main_content`}>
                                 <div className={"nft-card-actions"}>

@@ -61,8 +61,7 @@ const CreateNFT = () => {
         try {
             const {cid, path} = await uploadToCrust( nftFile );
             console.log("CID PATH", cid, path);
-            let meta = Buffer.from(`{tile: "${metaData.title}", description: "${metaData.description}", cid: "${cid}"}`, "utf-8").toString('hex')
-            console.log("META DATA:", meta);
+            let meta = Buffer.from(`{"title": "${metaData.title}", "description": "${metaData.description}", "cid": "${cid}"}`, "utf-8").toString('hex')
             const txn = await mint(meta, metaData.royalty, nftAddress);
             if (txn) {
                 console.log(txn);
