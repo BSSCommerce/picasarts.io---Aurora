@@ -37,8 +37,7 @@ A PoC backbone for NFT Marketplaces on Aurora.
 - IPFS uses [Crust](https://crust.network/)
 - Web3 & Ethers.js
 ## Install development environment
-As dApp development on Ethereum. We can use Truffle and Ganache
-Detailed document at [here](https://doc.aurora.dev/interact/truffle)
+As dApp development on Ethereum. We can use Truffle and Ganache. Detailed document at [here](https://doc.aurora.dev/interact/truffle)
 ## Working
 **Build Smart Contract**:
 Go to truffle-config.js to change your settings. Adding aurora testnet to MetaMask at [here](https://doc.aurora.dev/interact/metamask)
