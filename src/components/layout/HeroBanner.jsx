@@ -36,7 +36,6 @@ export default function HeroBanner() {
                     spacing={2}
                     justifyContent="center"
                 >
-                    <Button variant={"contained"} onClick={() => Router.push("/all-nfts")}>Explore</Button>
                     <Button variant="contained"  onClick={() => Router.push("/create")}>Create</Button>
                 </Stack>
             </Container>

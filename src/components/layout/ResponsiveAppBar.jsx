@@ -15,7 +15,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase'
-const pages = ['All NFTs', "Collections", 'Create'];
+const pages = ['My NFTs', 'Create'];
 const settings = ['Dashboard', 'Settings', 'Logout'];
 import Web3Context from "src/context/Web3Context";
 import {Wallet} from "./Wallet";
@@ -97,9 +97,7 @@ const ResponsiveAppBar = () => {
     const pageList = pages.map((page) => {
             let url = "/";
             if (page == pages[0]) {
-                url = "/all-nfts";
-            } else if (page == pages[1]) {
-                url = "/collections";
+                url = "/my-nfts";
             } else {
                 url = "/create"
             }
@@ -178,58 +176,11 @@ const ResponsiveAppBar = () => {
                         {pageList}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            {/*<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>*/}
-                                {!wallet ? <Wallet {...{ wallet, handleOpenUserMenu }} /> : <Wallet {...{ wallet, handleOpenUserMenu  }} />}
-                            {/*</IconButton>*/}
-                        </Tooltip>
-                        {wallet && <Menu
-                            sx={{mt: '50px'}}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            <MenuItem key={"menu-nft-collection"}>
-                                <ListItemIcon>
-                                    <DashboardIcon fontSize="small"/>
-                                </ListItemIcon>
-                                <NextLink key={`${wallet.address}_my_nfts`} href={"/my-nfts"}
-                                          className={"nft-author-name"}><Typography textAlign={"Left"}>My NFTs</Typography></NextLink>
-                            </MenuItem>
-                            <MenuItem key={"menu-my-collections"}>
-                                <ListItemIcon>
-                                    <SettingsIcon fontSize="small"/>
-                                </ListItemIcon>
-                                <NextLink href={"/collection/my-collections"}><Typography
-                                    textAlign={"Left"}>My Collection</Typography></NextLink>
-                            </MenuItem>
-                           {/* <MenuItem key={"menu-account-settings"}>
-                                <ListItemIcon>
-                                    <SettingsIcon fontSize="small"/>
-                                </ListItemIcon>
-                                <NextLink href={"/account/settings"}><Typography
-                                    textAlign={"Left"}>Settings</Typography></NextLink>
-                            </MenuItem>*/}
-                            <Divider/>
-                            <MenuItem key={"menu-account-logout"} onClick={() => wallet.signOut()}>
-                                <ListItemIcon>
-                                    <LogoutIcon fontSize="small"/>
-                                </ListItemIcon>
-                                <Typography textAlign={"Left"}>Logout</Typography>
-                            </MenuItem>
-                        </Menu>
-                        }
+                    <Box sx={{ display: "flex" }}>
+
+
+                        {!wallet ? <Wallet {...{ wallet, handleOpenUserMenu }} /> : <Wallet {...{ wallet, handleOpenUserMenu  }} />}
+                        <Button variant={"text"} sx={{color: "white"}} onClick={() => window.open("https://picasarts.io", "__blank")}>NFT Marketplace on NEAR</Button>
                     </Box>
 
                 </Toolbar>

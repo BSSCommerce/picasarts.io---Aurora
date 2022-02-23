@@ -15,6 +15,7 @@
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "dependencies": {
+    "@crustio/type-definitions": "^1.2.0",
     "@emotion/cache": "latest",
     "@emotion/react": "latest",
     "@emotion/server": "latest",
@@ -22,6 +23,7 @@
     "@mui/icons-material": "^5.3.1",
     "@mui/material": "latest",
     "@openzeppelin/contracts": "^4.1.0",
+    "@polkadot/api": "^7.9.1",
     "@truffle/hdwallet-provider": "^2.0.3",
     "bn": "^1.0.5",
     "copy-to-clipboard": "^3.3.1",

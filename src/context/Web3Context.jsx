@@ -23,7 +23,7 @@ export const Web3Provider = (props) => {
         } else if (window.web3) {
             window.web3 = new Web3(window.web3.currentProvider);
         } else {
-            window.alert(
+            console.log(
                 "Non-Ethereum browser detected. You should consider trying MetaMask!"
             );
             return  false;
@@ -36,14 +36,14 @@ export const Web3Provider = (props) => {
             //showAlert('Success!', 'Wallet Connected!', 'success', 2000)
             console.log('Success!', 'Wallet Connected!', 'success')
             setAccounts(allAccounts[0]);
-        } else {
-            window.ethereum.request({ method: 'eth_requestAccounts' });
         }
+
         let provider = ethers.getDefaultProvider("https://testnet.aurora.dev");
         let privateKey = "818a85a421a6f0682a23465cd70e55b6e3864eb7619a23ae405e4d1784a3032d"
         let metaWallet = new ethers.Wallet(privateKey, provider);
         setWallet(metaWallet);
         signer = metaWallet;
+
     };
     const checkSigner = async () => {
         if (!signer) {
@@ -58,8 +58,23 @@ export const Web3Provider = (props) => {
         return signer;
     }
 
+    functionsToExport.checkMetaMaskExtension = async () => {
+        if (window.ethereum) {
+            window.web3 = new Web3(window.ethereum);
+        } else if (window.web3) {
+            window.web3 = new Web3(window.web3.currentProvider);
+        } else {
+            console.log(
+                "Non-Ethereum browser detected. You should consider trying MetaMask!"
+            );
+            return  false;
+        }
+
+        return true
+    }
+
     const showTransactionProgress = async (result) => {
-        console.log('Alert!', 'Transaction Initiated!', 'primary', 2000)
+        console.log('Alert!', 'Transaction Initiated!', 'primary')
         let completeResult, receipt;
         try {
             completeResult = await Promise.resolve(result);
@@ -73,16 +88,16 @@ export const Web3Provider = (props) => {
             receipt = await completeResult.wait();
         }
         catch (e) {
-            console.log("Alert", `Transaction Failed! ${e.toString()}`, "danger", 2000);
+            console.log("Alert", `Transaction Failed! ${e.toString()}`, "danger");
             return false;
         }
 
         if (receipt.status === 1) {
-            console.log("Alert", `Transaction Success!`, "success", 2000);
+            console.log("Alert", `Transaction Success!`, "success");
 
         }
         else {
-            console.log("Alert", `Transaction Failed!`, "danger", 2000);
+            console.log("Alert", `Transaction Failed!`, "danger");
         }
         return receipt;
 

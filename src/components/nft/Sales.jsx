@@ -11,7 +11,7 @@ import {
 import NextLink from "next/link";
 import { utils } from 'ethers';
 
-const MyNFTs = () => {
+const Sales = () => {
     const {fetchMarketItems, tokenURI} = useContext(Web3Context);
     const [saleNFTs, setSaleNFTs] = useState([]);
     const [isLoadingPage, setIsLoadingPage] = useState(true);
@@ -56,8 +56,9 @@ const MyNFTs = () => {
         }
 
     }, [isFirstLoading]);
+
     return (
-        <Grid container spacing={2} >
+         <Grid container spacing={2} >
             {
                 isLoadingPage && [1, 2, 3, 4, 5, 6, 7, 8].map((i) => {
                     return <Grid item key={`skeleton-${i}`} xs={6} sm={4} md={3}>
@@ -118,4 +119,4 @@ const MyNFTs = () => {
     )
 
 }
-export default MyNFTs;
+export default Sales;

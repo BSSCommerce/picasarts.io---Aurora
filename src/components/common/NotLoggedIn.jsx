@@ -2,13 +2,17 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Router from "next/router";
-import {Wallet} from "../nft/Wallet";
+import {Wallet} from "src/components/layout/Wallet";
 import Container from "@mui/material/Container";
-import React from "react";
+import React, {useCallback} from "react";
 import backgroundImage from "src/public/static/img/bg_4.png";
 import Box from "@mui/material/Box";
 
-export default function NotLoggedIn({wallet}) {
+export default function NotLoggedIn({isConnectedMetaMask, isInstalledMetaMask}) {
+    const handleConnectMetaMask = useCallback(async () => {
+        await window.ethereum.enable();
+        window.location.reload();
+    }, [])
     return (
         <Box
             sx={{
@@ -29,7 +33,8 @@ export default function NotLoggedIn({wallet}) {
                     Discover, collect, and sell extraordinary NFTs
                 </Typography>
                 <Typography variant="h5" align="center" color="white" paragraph>
-                    Please connect wallet to create your own NFT
+                    {!isInstalledMetaMask &&  "Non-Ethereum browser detected. You should consider trying MetaMask!"}
+                    { isInstalledMetaMask && "Please connect wallet to create your own NFT" }
                 </Typography>
                 <Stack
                     sx={{ pt: 4, color: "white" }}
@@ -37,8 +42,8 @@ export default function NotLoggedIn({wallet}) {
                     spacing={2}
                     justifyContent="center"
                 >
-                    <Button variant="contained" onClick={() => Router.push("/")}>Explore</Button>
-                    <Wallet {...{ wallet }} />
+                    { !isInstalledMetaMask && <Button variant="contained" onClick={() => window.open("https://metamask.io/download/", "__blank")}>Try MetaMask</Button> }
+                    { isInstalledMetaMask && <Button variant="contained" onClick={() => handleConnectMetaMask()}>Connect Wallet</Button> }
                 </Stack>
             </Container>
         </Box>

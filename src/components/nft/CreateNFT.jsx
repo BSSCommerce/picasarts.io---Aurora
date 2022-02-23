@@ -1,21 +1,31 @@
-import {useCallback, useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {
     TextField,
     Button,
-    Grid
+    Grid,
+    Card,
+    CardHeader,
+    CardContent,
+    Typography,
+    Alert, CircularProgress
 } from "@mui/material";
 import Web3Context, { Web3Provider } from "src/context/Web3Context";
 import ImageUpload from "src/components/common/ImageUpload";
 import { uploadToCrust } from "near-crust-ipfs";
 const REQUIRED_ATTR_LIST = ["title", "description", "royalty"];
 import { nftAddress } from "src/config/contractAddress";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 const CreateNFT = () => {
+    const Router = useRouter();
     const [coverPhoto, setCoverPhoto] = useState('');
-    const [nftFile, setNftFile] = useState('');
+    const [nftFile, setNftFile] = useState();
     const [cost, setCost] = useState();
     const [newAttributeName, setNewAttributeName] = useState("")
     const { mint, getUserCollections } = useContext(Web3Context);
     const [metaData, setMetaData] = useState({ title: "", description: "", royalty: "" });
+    const [isCreatingNFT, setIsCreatingNFT] = useState(false);
+    const [isError, setIsError] = useState(false);
     const handleInputChange = (field, value) => {
         console.log(metaData);
         console.log(field);
@@ -59,13 +69,23 @@ const CreateNFT = () => {
     }, [])
     const createNFTFromData = useCallback(async () => {
         try {
-            const {cid, path} = await uploadToCrust( nftFile );
-            console.log("CID PATH", cid, path);
-            let meta = Buffer.from(`{"title": "${metaData.title}", "description": "${metaData.description}", "cid": "${cid}"}`, "utf-8").toString('hex')
-            const txn = await mint(meta, metaData.royalty, nftAddress);
-            if (txn) {
-                console.log(txn);
+            if (nftFile) {
+                setIsCreatingNFT(true);
+                const {cid, path} = await uploadToCrust( nftFile );
+                let meta = Buffer.from(`{"title": "${metaData.title}", "description": "${metaData.description}", "cid": "${cid}"}`, "utf-8").toString('hex')
+                const receipt = await mint(meta, metaData.royalty, nftAddress);
+                if (receipt) {
+                    console.log(receipt);
+                }
+                if (receipt.status) {
+                    setIsError(false);
+                    Router.push("/my-nfts");
+                } else {
+                    setIsError(true);
+                }
+                setIsCreatingNFT(false);
             }
+
         } catch (e) {
             console.log(e);
         }
@@ -78,6 +98,7 @@ const CreateNFT = () => {
 
             <Grid item xs={8}>
                 <h4>Create New Item</h4>
+                { isError && <Alert severity={"error"}>Create NFT failed!</Alert> }
                 <div className={"minting-form"}>
                     <h5><span style={{color: "red"}}>*</span> Required fields</h5>
                     <form onSubmit={e => e.preventDefault() && createNFTFromData()}>
@@ -102,18 +123,18 @@ const CreateNFT = () => {
 
                                     }
                                 })}
-                                <h3>Add Attributes(Optional)</h3>
-                                <div className={"form-control"}>
-                                    <TextField
-                                        label="Attribute Name"
-                                        variant={"outlined"}
-                                        value={newAttributeName}
-                                        onChange={(e) => setNewAttributeName(e.target.value)}
-                                    />
-                                    <Button variant={"contained"} onClick={() => handleNewAttribute(newAttributeName)}>
-                                        + Add Attribute
-                                    </Button>
-                                </div>
+                                {/*<h3>Add Attributes(Optional)</h3>*/}
+                                {/*<div className={"form-control"}>*/}
+                                {/*    <TextField*/}
+                                {/*        label="Attribute Name"*/}
+                                {/*        variant={"outlined"}*/}
+                                {/*        value={newAttributeName}*/}
+                                {/*        onChange={(e) => setNewAttributeName(e.target.value)}*/}
+                                {/*    />*/}
+                                {/*    <Button variant={"contained"} onClick={() => handleNewAttribute(newAttributeName)}>*/}
+                                {/*        + Add Attribute*/}
+                                {/*    </Button>*/}
+                                {/*</div>*/}
                                 {/*<div className={"form-control"}>*/}
                                 {/*    <strong>*/}
                                 {/*        <p>Cover Photo <span style={{color: "red"}}>*</span></p>*/}
@@ -132,14 +153,42 @@ const CreateNFT = () => {
 
                             </div>
                             <div>
-                                <Button variant={"contained"} onClick={createNFTFromData}>
-                                    Create NFT
+                                <Button variant={"contained"} disabled={isCreatingNFT} onClick={createNFTFromData}>
+                                    {isCreatingNFT && <CircularProgress size={14} />}
+                                    {!isCreatingNFT && 'Create NFT'}
                                 </Button>
                             </div>
                         </div>
                     </form>
                 </div>
 
+
+            </Grid>
+            <Grid item xs={4}>
+                <h4>Preview</h4>
+
+                <Card
+                    className={"nft-card"}
+                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                    { nftFile && <img src={URL.createObjectURL(nftFile)} /> }
+                    <CardHeader
+                        key={`card_header`}
+                        title={metaData.title ? metaData.title : "[title]"}
+                    />
+
+                    <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography gutterBottom component="div">
+                            Price
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            -- ETH
+                        </Typography>
+                        <div className={"nft-card-actions"}>
+                            <NextLink href={"#"}>See Details</NextLink> | <NextLink href={"#"}>Scan</NextLink>
+                        </div>
+                    </CardContent>
+                </Card>
             </Grid>
         </Grid>
     );
