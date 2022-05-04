@@ -21,9 +21,9 @@ import Web3Context from "src/context/Web3Context";
 import {Wallet} from "./Wallet";
 import NextLink from 'next/link';
 import logoWhite from "src/public/static/logo_white.svg";
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
+import NearIcon from '../icons/NearIcon';
+import AuroraIcon from '../icons/AuroraIcon';
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -72,6 +72,8 @@ const ResponsiveAppBar = () => {
     const [profile, setProfile] = useState(false);
     const [wallet, setWallet] = useState();
     const [account, setAccount] = useState({});
+    const [anchorElNetwork, setAnchorElNetwork] = React.useState(null);
+
     useEffect(() => {
         getWallet().then(data => setWallet(data))
     }, [])
@@ -94,6 +96,15 @@ const ResponsiveAppBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const handleOpenNetworkMenu = (event) => {
+        setAnchorElNetwork(event.currentTarget);
+    };
+
+    const handleCloseNetworkMenu = () => {
+        setAnchorElNetwork(null);
+    };
+    
     const pageList = pages.map((page) => {
             let url = "/";
             if (page == pages[0]) {
@@ -177,10 +188,53 @@ const ResponsiveAppBar = () => {
                     </Box>
 
                     <Box sx={{ display: "flex" }}>
-
-
+                        <Button
+                            variant={"outlined"}
+                            sx={{
+                                mr: 1, backgroundColor: 'white',
+                                borderColor: 'black',
+                                borderWidth: 1,
+                                color: 'green',
+                                '&:hover': {
+                                    backgroundColor: 'white',
+                                } }}
+                            onClick={handleOpenNetworkMenu}
+                            startIcon={<AuroraIcon fontSize="small" />}
+                        >
+                            AURORA
+                        </Button>
+                        <Menu
+                            anchorEl={anchorElNetwork}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElNetwork)}
+                            onClose={handleCloseNetworkMenu}
+                        >
+                            <NextLink key={'near-nft-mkt-link'} href={"https://picasarts.io"}
+                                as={"https://picasarts.io"}
+                            >
+                                <MenuItem key={'aurora'}>
+                                    <ListItemIcon>
+                                        <NearIcon fontSize={'small'} />
+                                    </ListItemIcon>
+                                    <Typography textAlign={"Left"}>NEAR</Typography>
+                                </MenuItem>
+                            </NextLink>
+                            <MenuItem key={'aurora-nft-mkt-link'}>
+                                <ListItemIcon>
+                                    <AuroraIcon fontSize="small" />
+                                </ListItemIcon>
+                                <Typography textAlign={"Left"}>AURORA</Typography>
+                            </MenuItem>
+                        </Menu>
                         {!wallet ? <Wallet {...{ wallet, handleOpenUserMenu }} /> : <Wallet {...{ wallet, handleOpenUserMenu  }} />}
-                        <Button variant={"text"} sx={{color: "white"}} onClick={() => window.open("https://picasarts.io", "__blank")}>NFT Marketplace on NEAR</Button>
                     </Box>
 
                 </Toolbar>
